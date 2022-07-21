@@ -253,7 +253,6 @@ class Layer:
 
         for row in range(0, n_rows):
             for col in range(0, n_cols):
-                this_cond_val = self.cond_mat[row, col]
                 if self.cond_mat[row, col] != tracer.Cell.INSULATOR.value and self.cond_mat[
                     row, col] != tracer.Cell.AIR.value:
                     for neighbor_row in range(row - 1, row + 2):
@@ -331,5 +330,3 @@ class Layer:
         for plated_cell in plated_cells:
             if self.cond_mat[plated_cell[0], plated_cell[1]] <= tracer.Cell.INSULATOR.value:
                 self.cond_mat[plated_cell[0], plated_cell[1]] = -1 * tracer.Cell.CONDUCTOR.value
-
-

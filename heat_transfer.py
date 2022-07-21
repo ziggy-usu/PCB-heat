@@ -8,21 +8,6 @@ from math import ceil
 
 import tracer
 
-# die_in_plane_k_corr = 700
-# die_thru_plane_k_corr = 9000
-# diel_k_corr = [die_thru_plane_k_corr, die_in_plane_k_corr, die_in_plane_k_corr]
-
-# cond_in_plane_k_corr = 1
-# cond_thru_plane_k_corr = 1
-# cond_k_corr = [cond_thru_plane_k_corr, cond_in_plane_k_corr, cond_in_plane_k_corr]
-
-# conv_corr = 1
-# rad_corr_coef = 10
-# rad_corr_pow = 0.5
-# rad_correction = rad_corr_coef * (Tsk - Tak) ** rad_corr_pow
-# comp_htc_corr = 15
-
-
 
 def lookup_g_v2(temperature_c):
     temp_vec = np.asarray([0, 20, 40, 60, 80, 100, 200])
@@ -70,9 +55,6 @@ class Simultaneous:
             print("Creating simultaneous simulation")
         self.htc = list()
         self.temp_mat = self.calc_initial_board_temps()
-
-        # self.res_htc = -0.003 * self.simulation.resolution * self.simulation.resolution + 0.035 * self.simulation.resolution + 1
-        # self.res_cond = -0.004 * self.simulation.resolution * self.simulation.resolution - 0.02 * self.simulation.resolution + 2.4
 
         self.q_components = np.zeros(np.append(2, np.shape(self.board.layers[0].Q_mat)))
 
@@ -175,7 +157,6 @@ class Simultaneous:
 
         self.htc = [h_top, h_side, h_btm]
         Ts = Ta + dt
-        # self.htc = [0.0004, 0.0003, 0.0002]
         return Ts
 
     def get_general_board_dims(self):
@@ -222,7 +203,6 @@ class Simultaneous:
             self.cell_dep = self.board.layers[layer].thickness
             for col in range(0, self.grid_dims[2]):  # j direction
                 for row in range(0, self.grid_dims[1]):  # i direction
-                    # if self.board.layers[layer].cond_mat[row, col] != tracer.Cell.AIR.value:
                     this_board_coord = [layer, row, col]
                     # empty list for neighboring cells - used to build matrix cell for self (sum of neighbor 'C's)
                     self.neighbor_c_list = list()
@@ -421,7 +401,7 @@ class Simultaneous:
     def neighbor_c_air(self, coord, neighbor_dir):
         area = self.get_area(neighbor_dir)
         conv_dir = self.get_conv_dir(neighbor_dir)
-        htc = self.get_htc(conv_dir, self.simulation.ambient, self.temp_mat[coord[0], coord[1], coord[2]])  # * self.res_htc
+        htc = self.get_htc(conv_dir, self.simulation.ambient, self.temp_mat[coord[0], coord[1], coord[2]])
         return htc * area
 
     def neighbor_c_cond(self, coord, neighbor_dir):
@@ -452,7 +432,7 @@ class Simultaneous:
         # depth is half due to grid format
         depth = self.get_depth(neighbor_dir) / 2
 
-        return this_k * area / depth  # * self.res_cond
+        return this_k * area / depth
 
     def _neighbor_ij(self, coord, neighbor_dir):
         if neighbor_dir[1] != 0:

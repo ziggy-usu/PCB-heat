@@ -106,7 +106,6 @@ def set_res_values(start, end, mat_network, cell_thickness, material):
     else:
         path_taken = short_path
     res_mat = calc_resistances(path_taken, start, end, material, cell_thickness, mat_network)
-    # show_path(start, path_taken, res_mat)
     return res_mat
 
 
@@ -148,10 +147,8 @@ def calc_resistances(path, path_start, path_end, material, cell_ht, mat_network)
     res_cells = np.argwhere(mat_resistance != 0)
 
     for no_res_cell in no_res_cells:
-        # np.linalg.norm(steps_trans[step])
         idx = np.linalg.norm((res_cells-no_res_cell), axis=1).argmin()
         this_res_loc = res_cells[idx]
-        # this_res = mat_resistance[this_res_loc[0], this_res_loc[1]]
         mat_resistance[no_res_cell[0], no_res_cell[1]] = mat_resistance[this_res_loc[0], this_res_loc[1]]
 
     clipped_res_mat = clip_res_matrix(mat_resistance, mat_network, path_start, path_end, steps)

@@ -36,7 +36,6 @@ class App(customtkinter.CTk):
         # configure grid layout (2x2)
         self.grid_columnconfigure(1, weight=1)
         self.grid_rowconfigure(1, weight=1)
-        # self.grid_rowconfigure(1, weight=10)
 
         self.view_process()
 
@@ -1330,7 +1329,6 @@ class App(customtkinter.CTk):
         elif self.results_state == 1:
             plot = ax.pcolormesh(axes[1], axes[0], np.transpose(self.heat_analysis.board.layers[which_layer].Q_mat), cmap='Wistia')
         elif self.results_state == 2:
-            # c_map_colors = ["darkblue", "cyan", "orange", "red", "mistyrose"]
             c_map_colors = ["darkblue", "dodgerblue", "yellowgreen", "orange", "red", "salmon", "mistyrose"]
             heat_cmap = matplotlib.colors.LinearSegmentedColormap.from_list("heatcmap", c_map_colors)
 

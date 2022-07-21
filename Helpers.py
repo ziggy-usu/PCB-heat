@@ -94,13 +94,10 @@ def load_files(settings_file_name):
 
             if thisLayerType == "Conductor":
                 thisLayerCondMaterial = conductorMaterial
-                thisLayerInsulMaterial = dielectricMaterial
             elif thisLayerType == "Dielectric":
                 thisLayerCondMaterial = conductorMaterial
-                thisLayerInsulMaterial = dielectricMaterial
             elif thisLayerType == "SolderMask":
                 thisLayerCondMaterial = platingMaterial
-                thisLayerInsulMaterial = solderMaskMaterial
 
             if simulation.show_process:
                 print("Creating layer: " + thisLayerName)
@@ -133,9 +130,6 @@ def load_files(settings_file_name):
     board = pcb_board.Board(layer_list, board_components, simulation, conductorMaterial, dielectricMaterial)
 
     return board
-
-    # need to add solder layers for top and bottom
-    # need to add heat sink file with parameters
 
 
 def load_Gerber(gerberFileLocation):

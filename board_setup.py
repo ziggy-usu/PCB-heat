@@ -183,4 +183,3 @@ def run_simulation(board_settings, sim_settings):
     heat_transfer_analysis.solve()
 
     return heat_transfer_analysis
-
